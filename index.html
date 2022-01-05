@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chart with quickchart</title>
+	</head>
+	<style>
+		.img {
+			margin: auto;
+            display: block;
+			user-select: none;
+			padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+		}
+	</style>
+	<body id="body">
+		<!-- <img id="chart" class="img" src="https://quickchart.io/chart?bkg=white&amp;c={type:%27bar%27,data:{labels:[2012,2013,2014,2015,2016],datasets:[{label:%27Users%27,data:[120,60,50,180,120]}]}}" width="601" height="361" /> -->
+	</body>
+	<script>
+		document.addEventListener("click", () => {
+			const randomNumber = () => Math.floor(Math.random() * 20)
+			const plans = [
+				["planVargas", randomNumber()],
+				["planOni", randomNumber()],
+				["planPeña", randomNumber()],
+			]
+
+			const chart = {
+				type: "bar",
+				data: {
+					labels: plans.map(([planName]) => `'${planName}'`),
+					datasets: [
+						{
+							label: "Servicios",
+							data: plans.map(([_, serviceCount]) => serviceCount),
+						},
+					],
+				},
+			}
+
+			const body = document.getElementById("body")
+			const rawSrc = `{type:%27pie%27,data:{labels:[${chart.data.labels}],datasets:[{label:%27Servicios%27,data:[${chart.data.datasets[0].data}]}]}}`
+			body.innerHTML += `<img class="img" src="https://quickchart.io/chart?bkg=white&amp;c=${rawSrc}" width="601" height="361" />`
+		})
+	</script>
+</html>
